@@ -2,7 +2,7 @@ import { swap } from "../utils/swap";
 
 /**
  * 冒泡排序
- * 时间复杂度 O(n^2) 额外空间复杂度 O(1)
+ * 时间复杂度 O(N^2) 额外空间复杂度 O(1)
  * @param data 源数据
  * @param type 排序类型（1 从小到大【默认】 2 从大到小）
  * @returns 排序结果
