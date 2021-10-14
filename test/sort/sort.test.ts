@@ -4,6 +4,7 @@ import {
   insertionSort,
   mergeSort,
   heapSort,
+  quickSort,
 } from "@/sort/index";
 
 const source = Array.from({ length: 10 }, () => Math.floor(Math.random() * 10));
@@ -59,5 +60,15 @@ describe("Heap sort", () => {
 
   it("sort from large to small", () => {
     expect(heapSort(source.slice(), 2)).toEqual(lowerResult);
+  });
+});
+
+describe("Quick sort", () => {
+  it("sort from small to large", () => {
+    expect(quickSort(source.slice())).toEqual(upperResult);
+  });
+
+  it("sort from large to small", () => {
+    expect(quickSort(source.slice(), 2)).toEqual(lowerResult);
   });
 });
