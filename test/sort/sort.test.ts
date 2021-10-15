@@ -5,9 +5,14 @@ import {
   mergeSort,
   heapSort,
   quickSort,
+  countingSort,
+  radixSort,
+  sort,
 } from "@/sort/index";
 
-const source = Array.from({ length: 10 }, () => Math.floor(Math.random() * 10));
+const source = Array.from({ length: 100 }, () =>
+  Math.floor(Math.random() * 100)
+);
 
 const upperResult = source.slice().sort((x, y) => x - y);
 
@@ -70,5 +75,35 @@ describe("Quick sort", () => {
 
   it("sort from large to small", () => {
     expect(quickSort(source.slice(), 2)).toEqual(lowerResult);
+  });
+});
+
+describe("Counting sort", () => {
+  it("sort from small to large", () => {
+    expect(countingSort(source.slice())).toEqual(upperResult);
+  });
+
+  it("sort from large to small", () => {
+    expect(countingSort(source.slice(), 2)).toEqual(lowerResult);
+  });
+});
+
+describe("Radix sort", () => {
+  it("sort from small to large", () => {
+    expect(radixSort(source.slice())).toEqual(upperResult);
+  });
+
+  it("sort from large to small", () => {
+    expect(radixSort(source.slice(), 2)).toEqual(lowerResult);
+  });
+});
+
+describe("Sort", () => {
+  it("sort from small to large", () => {
+    expect(sort(source.slice())).toEqual(upperResult);
+  });
+
+  it("sort from large to small", () => {
+    expect(sort(source.slice(), 2)).toEqual(lowerResult);
   });
 });

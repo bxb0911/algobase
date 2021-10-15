@@ -4,3 +4,6 @@ export { insertionSort } from "./insertion";
 export { mergeSort } from "./merge";
 export { heapSort } from "./heap";
 export { quickSort } from "./quick";
+export { countingSort } from "./counting";
+export { radixSort } from "./radix";
+export { sort } from "./sort";

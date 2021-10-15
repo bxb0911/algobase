@@ -12,22 +12,41 @@ export function quickSort<T>(data: T[], type: 1 | 2 = 1): T[] {
   if ((len = data.length) <= 1) {
     return data;
   }
-
+  process(data, 0, len - 1, type);
   return data;
 }
 
-function partition<T>(data: T[], ref: T): [number, number] {
-  let left = -1,
-    right = data.length,
-    i = 0;
-  while (i < right) {
-    if (data[i] < ref) {
-      swap(data, i++, left++);
-    } else if (data[i] > ref) {
-      swap(data, i, right--);
-    } else {
-      i++;
+export function process<T>(data: T[], l: number, r: number, type: 1 | 2) {
+  if (l <= r) {
+    let ref = l + Math.floor(Math.random() * (r - l + 1));
+    swap(data, ref, r);
+    let [nl, nr] = partition(data, l, r, type);
+    process(data, l, nl, type);
+    process(data, nr, r, type);
+  }
+}
+
+export function partition<T>(data: T[], l: number, r: number, type: 1 | 2): [number, number] {
+  let ref = r, i = l;
+  while (i < r) {
+    if (type === 1) {
+      if (data[i] > data[ref]) {
+        swap(data, i, --r);
+      } else if (data[i] < data[ref]) {
+        swap(data, i++, l++);
+      } else {
+        i++;
+      }
+    } else if (type === 2) {
+      if (data[i] < data[ref]) {
+        swap(data, i, --r);
+      } else if (data[i] > data[ref]) {
+        swap(data, i++, l++);
+      } else {
+        i++;
+      }
     }
   }
-  return [left, right];
+  swap(data, r, ref);
+  return [l - 1, r + 1];
 }
