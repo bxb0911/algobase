@@ -22,34 +22,31 @@ export function addNode(head: Node, value: any): Node {
   return head;
 }
 
-export function insertAfter(head: Node, node: Node, newNode: Node) {
+export function insertAfter(head: Node, value: any, newValue: any) {
   let p = head;
-  while (p.next !== null && p !== node) {
+  while (p.next !== null && p.value !== value) {
     p = p.next;
   }
-  if (p === node) {
+  let newNode = new Node(newValue);
+  if (p.value === value) {
     newNode.next = p.next;
     p.next = newNode;
   }
   return head;
 }
 
-export function insertBeginning(head: Node, newNode: Node): Node {
+export function insertBeginning(head: Node, newValue: any): Node {
+  let newNode = new Node(newValue);
   newNode.next = head;
   head = newNode;
   return head;
 }
 
-export function removeAfter(head: Node, node: Node): Node {
-  if (head === node && head.next !== null) {
-    head.next = null;
-  }
+export function removeAfter(head: Node, value: any): Node {
   let p = head;
-  while (p.next !== null && p !== node) {
-    p = p.next;
-  }
-  if (p === node && p.next !== null) {
+  while (p.next !== null && p.value === value) {
     p.next = p.next.next;
+    break;
   }
   return head;
 }
