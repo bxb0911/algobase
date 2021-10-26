@@ -9,66 +9,35 @@
   <script>
     class Node {
       value;
-      next;
+      left;
+      right;
       constructor(val) {
         this.value = val;
-        this.next = null;
+        this.left = null;
+        this.right = null;
       }
     }
+    const root = new Node(1);
+    root.left = new Node(2);
+    root.right = new Node(3);
+    root.left.left = new Node(4);
+    root.left.right = new Node(5);
+    root.right.left = new Node(6);
+    root.right.right = new Node(7);
 
-    function partition(head, target) {
-      if (head === null || head.next === null) {
-        return head;
-      }
-      let p = head;
-      let lh = null, lt = null, ch = null, ct = null, rh = null, rt = null;
-      let next = null;
-      while (p !== null) {
-        next = p.next;
-        p.next = null;
-        if (p.value < target) {
-          if (lh === null && lt === null) {
-            lh = p;
-            lt = lh;
-          } else if (lt !== null && lh !== null) {
-            lt.next = p;
-            lt = p;
-          }
-        } else if (p.value > target) {
-          if (rh === null && rt === null) {
-            rh = p;
-            rt = rh;
-          } else if (rt !== null && rh !== null) {
-            rt.next = p;
-            rt = p;
-          }
-        } else {
-          if (ch === null && ct === null) {
-            ch = p;
-            ct = ch;
-          } else if (ct !== null && ch !== null) {
-            ct.next = p;
-            ct = p;
-          }
-        }
-        p = next;
-      }
-      if (lt !== null) {
-        lt.next = ch !== null ? ch : rh;
-      }
-
-      if (ct !== null) {
-        ct.next = rh !== null ? rh : null;
-      }
-      console.log(JSON.stringify(lh !== null ? lh : ch))
-      return lh !== null ? lh : ch;
+  function traverse(root, res = '') {
+    let cur = root;
+    if (cur === null) {
+      return res;
     }
-    const even = new Node(1);
-    even.next = new Node(2);
-    even.next.next = new Node(3);
-    even.next.next.next = new Node(1); 
+    res = traverse(cur.left, res);
+    res = traverse(cur.right, res);
+    res += ('' + cur.value);
+    return res;
+  }
 
-    partition(even, 2);
+  let result = traverse(root);
+  console.log(result);
   </script>
 </body>
 </html>

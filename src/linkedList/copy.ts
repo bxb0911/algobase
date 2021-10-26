@@ -1,4 +1,4 @@
-class Node {
+export class Node {
   public value: any;
   public next: Node | null;
   public rand: Node | null;
@@ -17,26 +17,29 @@ class Node {
  * @returns
  */
 export function copy(head: Node): Node | null {
-  let p: Node | null = head;
+  let p: Node | null = head, next = null;
   while (p !== null) {
-    let cur: Node | null = new Node(p.value);
-    cur.next = p.next;
-    p.next = cur;
-    p = cur.next;
+    next = p.next;
+    p.next = new Node(p.value);
+    p.next.next = next;
+    p = next;
   }
   p = head;
+  let curCopy: Node | null = null;
   while (p !== null && p.next !== null && p.rand !== null) {
-    p.next.rand = p.rand.next;
+    next = p.next.next;
+    curCopy = p.next;
+    curCopy.rand = p.rand !== null ? p.rand.next : null;
+    p = next;
   }
   p = head;
-  let p1 = head.next;
   let nHead = head.next;
-  // p -> p1 -> p2 -> p3 -> p4 -> p5 -> null p === p4
-  while (p !== null && p1 !== null && p1.next !== null) {
-    p.next = p1.next;
-    p1.next = p.next.next;
-    p = p.next;
+  while (p !== null && p.next !== null) {
+    next = p.next.next;
+    curCopy = p.next;
+    p.next = next;
+    curCopy.next = next !== null ? next.next : null;
+    p = next;
   }
-  p = null;
   return nHead;
 }
