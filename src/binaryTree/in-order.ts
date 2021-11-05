@@ -19,6 +19,17 @@ export function inOrderRecursion(root: Node | null, res: any[] = []): any[] {
  * 中序遍历（非递归版）
  * @param root 
  */
-export function traverse(root: Node) {
-  
+export function inOrderTraverse(root: Node | null) {
+  let stack: Node[] = [], result: Node[] = [];
+  while(stack.length > 0 || root !== null) {
+    if (root !== null) {
+      stack.push(root);
+      root = root.left;
+    } else {
+      root = stack.pop() as Node;
+      result.push(root.value);
+      root = root.right;
+    }
+  }
+  return result;
 }

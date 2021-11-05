@@ -1,8 +1,8 @@
-import { Node } from "./binaryTree";
+import { Node } from './binaryTree';
 
 /**
  * 前序遍历（递归版）
- * @param root
+ * @param root 
  * @returns
  */
 export function preOrderRecursion(root: Node | null, res: any[] = []): any[] {
@@ -18,13 +18,12 @@ export function preOrderRecursion(root: Node | null, res: any[] = []): any[] {
 
 /**
  * 前序遍历（非递归版）
- * @param root
- * @returns
+ * @param root 
+ * @returns 
  */
 export function preOrderTraverse(root: Node): any[] {
-  let stack: Node[] = [root],
-    result = []; // unshift pop
-  while (stack.length > 0) {
+  let stack: Node[] = [root], result = []; // unshift pop
+  while(stack.length > 0) {
     let cur: Node = stack.pop() as Node;
     result.push(cur.value);
     cur.right !== null && stack.push(cur.right);

@@ -1,4 +1,4 @@
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,27 +17,56 @@
         this.right = null;
       }
     }
-    const root = new Node(1);
-    root.left = new Node(2);
-    root.right = new Node(3);
-    root.left.left = new Node(4);
+
+    const root = new Node(6);
+    root.left = new Node(4);
+    root.right = new Node(8);
+    root.left.left = new Node(9);
     root.left.right = new Node(5);
-    root.right.left = new Node(6);
-    root.right.right = new Node(7);
+    root.right.left = new Node(7);
+    root.right.right = new Node(9);
+    // root.left.left.left = new Node(8);
+    // root.left.left.right = new Node(9);
+    // root.left.right.left = new Node(10);
+    // root.left.right.right = new Node(11);
+    // root.right.left.left = new Node(12);
+    // root.right.left.right = new Node(13);
+    // root.right.right.left = new Node(14);
+    // root.right.right.right = new Node(15);
 
-  function traverse(root, res = '') {
-    let cur = root;
-    if (cur === null) {
-      return res;
+    function isBST(head) {
+      let info = process(head);
+      return info ? info.isBST : true;
     }
-    res = traverse(cur.left, res);
-    res = traverse(cur.right, res);
-    res += ('' + cur.value);
-    return res;
-  }
 
-  let result = traverse(root);
-  console.log(result);
+    function process(head) {
+      if (head === null) {
+        return null;
+      }
+      let leftInfo = process(head.left);
+      let rightInfo = process(head.right);
+      let min = head.value, max = head.value;
+      let isBST = false;
+      if (leftInfo !== null) {
+        min = Math.min(min, leftInfo.min);
+        max = Math.max(max, leftInfo.max);
+      }
+      if (rightInfo !== null) {
+        min = Math.min(min, rightInfo.min);
+        max = Math.max(max, rightInfo.max);
+      }
+      if ((leftInfo !== null ? (leftInfo.isBST && leftInfo.max < head.value) : true) && (rightInfo !== null ? (rightInfo.isBST && rightInfo.min > head.value) : true)) {
+        isBST = true;
+      }
+      return {
+        isBST,
+        max,
+        min
+      }
+    }
+    debugger;
+    let res = isBST(root);
+    console.log(res);
   </script>
 </body>
 </html>
