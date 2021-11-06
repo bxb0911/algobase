@@ -34,17 +34,20 @@ function process(head: Node | null): Info | null {
     height = 1,
     isFull = false;
   let leftInfo = process(head.left);
-  let rightInfo = process(head.left);
+  let rightInfo = process(head.right);
   if (leftInfo !== null) {
     nodeCount += leftInfo.nodeCount;
-    height += leftInfo.height;
+    height = leftInfo.height + 1;
   }
   if (rightInfo !== null) {
     nodeCount += rightInfo.nodeCount;
-    height += rightInfo.height;
-    isFull;
+    height = rightInfo.height + 1;
   }
-  if (leftInfo !== null ? leftInfo.isFull : true) {
+  if (
+    (leftInfo !== null ? leftInfo.isFull : true) &&
+    (rightInfo !== null ? rightInfo.isFull : true) &&
+    nodeCount === Math.pow(2, height) - 1
+  ) {
     isFull = true;
   }
   return {

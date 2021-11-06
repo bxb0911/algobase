@@ -1,10 +1,12 @@
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   <script>
     class Node {
@@ -34,39 +36,45 @@
     // root.right.right.left = new Node(14);
     // root.right.right.right = new Node(15);
 
-    function isBST(head) {
-      let info = process(head);
-      return info ? info.isBST : true;
+    function isFull(head) {
+      const info = process(head);
+      return info ? info.isFull : true;
     }
 
     function process(head) {
       if (head === null) {
         return null;
       }
+      let nodeCount = 1,
+        height = 1,
+        isFull = false;
       let leftInfo = process(head.left);
       let rightInfo = process(head.right);
-      let min = head.value, max = head.value;
-      let isBST = false;
       if (leftInfo !== null) {
-        min = Math.min(min, leftInfo.min);
-        max = Math.max(max, leftInfo.max);
+        nodeCount += leftInfo.nodeCount;
+        height = leftInfo.height + 1;
       }
       if (rightInfo !== null) {
-        min = Math.min(min, rightInfo.min);
-        max = Math.max(max, rightInfo.max);
+        nodeCount += rightInfo.nodeCount;
+        height = rightInfo.height + 1;
       }
-      if ((leftInfo !== null ? (leftInfo.isBST && leftInfo.max < head.value) : true) && (rightInfo !== null ? (rightInfo.isBST && rightInfo.min > head.value) : true)) {
-        isBST = true;
+      if (
+        (leftInfo !== null ? leftInfo.isFull : true) &&
+        (rightInfo !== null ? rightInfo.isFull : true) &&
+        nodeCount === Math.pow(2, height) - 1
+      ) {
+        isFull = true;
       }
       return {
-        isBST,
-        max,
-        min
-      }
+        nodeCount,
+        height,
+        isFull,
+      };
     }
     debugger;
-    let res = isBST(root);
+    let res = isFull(root);
     console.log(res);
   </script>
 </body>
+
 </html>

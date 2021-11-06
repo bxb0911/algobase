@@ -1,5 +1,6 @@
 import { Node } from "@/binaryTree/binaryTree";
 import { isBST } from "@/binaryTree/isBST";
+import { isFull } from "@/binaryTree/isFull";
 
 const root = new Node(6);
 root.left = new Node(4);
@@ -13,9 +14,18 @@ describe("Is xxx binary tree", () => {
   it("is bst", () => {
     expect(isBST(root)).toEqual(true);
   });
-  
+
   it("not a bst", () => {
     root && root.left && (root.left.left = new Node(10));
     expect(isBST(root)).toEqual(false);
+  });
+
+  it("is full", () => {
+    expect(isFull(root)).toEqual(true);
+  });
+
+  it("not full", () => {
+    root && root.left && (root.left.left = null);
+    expect(isFull(root)).toEqual(false);
   });
 });
