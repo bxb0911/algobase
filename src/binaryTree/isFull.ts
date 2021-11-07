@@ -3,7 +3,6 @@ import { Node } from "./binaryTree";
 type Info = {
   nodeCount: number;
   height: number;
-  isFull: boolean;
 };
 
 /**
@@ -14,45 +13,24 @@ type Info = {
  * @returns
  */
 export function isFull(head: Node | null): boolean {
-  const info = process(head);
-  return info ? info.isFull : true;
+  const { nodeCount, height } = process(head);
+  return (1 << height) - 1 === nodeCount;
 }
 
 /**
  * 递归函数
- * 1. 左子树是满二叉树
- * 2. 右子树是满二叉树
- * 3. 左子树
+ * 返回节点个数及层高
  * @param head
  * @returns
  */
-function process(head: Node | null): Info | null {
+function process(head: Node | null): Info {
   if (head === null) {
-    return null;
+    return { nodeCount: 0, height: 0 };
   }
-  let nodeCount = 1,
-    height = 1,
-    isFull = false;
-  let leftInfo = process(head.left);
-  let rightInfo = process(head.right);
-  if (leftInfo !== null) {
-    nodeCount += leftInfo.nodeCount;
-    height = leftInfo.height + 1;
-  }
-  if (rightInfo !== null) {
-    nodeCount += rightInfo.nodeCount;
-    height = rightInfo.height + 1;
-  }
-  if (
-    (leftInfo !== null ? leftInfo.isFull : true) &&
-    (rightInfo !== null ? rightInfo.isFull : true) &&
-    nodeCount === Math.pow(2, height) - 1
-  ) {
-    isFull = true;
-  }
+  let leftInfo = process(head.left),
+    rightInfo = process(head.right);
   return {
-    nodeCount,
-    height,
-    isFull,
+    nodeCount: leftInfo.nodeCount + rightInfo.nodeCount + 1,
+    height: Math.max(leftInfo.height, rightInfo.height) + 1,
   };
 }

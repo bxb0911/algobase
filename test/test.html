@@ -20,59 +20,72 @@
       }
     }
 
-    const root = new Node(6);
-    root.left = new Node(4);
-    root.right = new Node(8);
-    root.left.left = new Node(9);
-    root.left.right = new Node(5);
-    root.right.left = new Node(7);
-    root.right.right = new Node(9);
-    // root.left.left.left = new Node(8);
-    // root.left.left.right = new Node(9);
-    // root.left.right.left = new Node(10);
-    // root.left.right.right = new Node(11);
-    // root.right.left.left = new Node(12);
-    // root.right.left.right = new Node(13);
-    // root.right.right.left = new Node(14);
-    // root.right.right.right = new Node(15);
+    const root = new Node(0);
+    const o1 = new Node(1);
+    const o2 = new Node(2);
+    root.left = o1;
+    root.right = o2;
+    const o3 = new Node(3);
+    const o4 = new Node(4);
+    const o5 = new Node(5);
+    const o6 = new Node(6);
+    const o7 = new Node(7);
+    root.left.left = o3;
+    root.left.right = o4;
+    root.right.left = o5;
+    root.right.right = o6;
 
-    function isFull(head) {
-      const info = process(head);
-      return info ? info.isFull : true;
+    function lowestCommon(head, o1, o2) {
+      return process(head, o1, o2).common;
     }
 
-    function process(head) {
+    function process(head, o1, o2) {
       if (head === null) {
-        return null;
+        return {
+          hasO1: false,
+          hasO2: false,
+          common: null,
+        };
       }
-      let nodeCount = 1,
-        height = 1,
-        isFull = false;
-      let leftInfo = process(head.left);
-      let rightInfo = process(head.right);
-      if (leftInfo !== null) {
-        nodeCount += leftInfo.nodeCount;
-        height = leftInfo.height + 1;
+      let leftInfo = process(head.left, o1, o2),
+        rightInfo = process(head.right, o1, o2);
+
+      if (leftInfo.common || rightInfo.common) {
+        return {
+          hasO1: true,
+          hasO2: true,
+          common: leftInfo.common || rightInfo.common
+        }
       }
-      if (rightInfo !== null) {
-        nodeCount += rightInfo.nodeCount;
-        height = rightInfo.height + 1;
+      if (leftInfo.hasO1 || rightInfo.hasO1) {
+        return {
+          hasO1: true,
+          hasO2: head === o2,
+          common: head === o2 ? head : null
+        }
       }
-      if (
-        (leftInfo !== null ? leftInfo.isFull : true) &&
-        (rightInfo !== null ? rightInfo.isFull : true) &&
-        nodeCount === Math.pow(2, height) - 1
-      ) {
-        isFull = true;
+      if (leftInfo.hasO2 || rightInfo.hasO2) {
+        return {
+          hasO1: head === o1,
+          hasO2: true,
+          common: head === o1 ? head : null
+        }
+      }
+      if ((leftInfo.hasO1 && rightInfo.hasO2) || (leftInfo.hasO2 && rightInfo.hasO1)) {
+        return {
+          hasO1: true,
+          hasO2: true,
+          common: head
+        }
       }
       return {
-        nodeCount,
-        height,
-        isFull,
-      };
+        hasO1: head === o1,
+        hasO2: head === o2,
+        common: null
+      }
     }
     debugger;
-    let res = isFull(root);
+    let res = lowestCommon(root, o3, o4);
     console.log(res);
   </script>
 </body>
