@@ -20,73 +20,48 @@
       }
     }
 
-    const root = new Node(0);
-    const o1 = new Node(1);
-    const o2 = new Node(2);
+    const root = new Node(1);
+    const o1 = new Node(2);
+    const o2 = new Node(3);
+    const o3 = new Node(4);
+    const o4 = new Node(5);
+    const o5 = new Node(6);
+    const o6 = new Node(7);
     root.left = o1;
     root.right = o2;
-    const o3 = new Node(3);
-    const o4 = new Node(4);
-    const o5 = new Node(5);
-    const o6 = new Node(6);
-    const o7 = new Node(7);
     root.left.left = o3;
     root.left.right = o4;
     root.right.left = o5;
     root.right.right = o6;
 
-    function lowestCommon(head, o1, o2) {
-      return process(head, o1, o2).common;
+    function zzy(head) {
+      let stack = [],
+        result = "";
+      stack.push(head);
+      while (stack.length > 0) {
+        const cur = stack.pop();
+        if (cur === '#') {
+          result += cur + '_';
+          continue;
+        }
+        result += cur.value + '_';
+        if (cur.right !== null) {
+          stack.push(cur.right);
+        } else {
+          stack.push("#");
+        }
+        if (cur.left !== null) {
+          stack.push(cur.left);
+        } else {
+          stack.push("#");
+        }
+      }
+      return result;
     }
 
-    function process(head, o1, o2) {
-      if (head === null) {
-        return {
-          hasO1: false,
-          hasO2: false,
-          common: null,
-        };
-      }
-      let leftInfo = process(head.left, o1, o2),
-        rightInfo = process(head.right, o1, o2);
-
-      if (leftInfo.common || rightInfo.common) {
-        return {
-          hasO1: true,
-          hasO2: true,
-          common: leftInfo.common || rightInfo.common
-        }
-      }
-      if (leftInfo.hasO1 || rightInfo.hasO1) {
-        return {
-          hasO1: true,
-          hasO2: head === o2,
-          common: head === o2 ? head : null
-        }
-      }
-      if (leftInfo.hasO2 || rightInfo.hasO2) {
-        return {
-          hasO1: head === o1,
-          hasO2: true,
-          common: head === o1 ? head : null
-        }
-      }
-      if ((leftInfo.hasO1 && rightInfo.hasO2) || (leftInfo.hasO2 && rightInfo.hasO1)) {
-        return {
-          hasO1: true,
-          hasO2: true,
-          common: head
-        }
-      }
-      return {
-        hasO1: head === o1,
-        hasO2: head === o2,
-        common: null
-      }
-    }
-    debugger;
-    let res = lowestCommon(root, o3, o4);
+    let res = zzy(root);
     console.log(res);
+
   </script>
 </body>
 
