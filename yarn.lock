@@ -2773,6 +2773,11 @@ pretty-format@^27.0.0, pretty-format@^27.3.1:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
+priorityqueue@^1.0.0:
+  version "1.0.0"
+  resolved "http://192.168.14.11:8888/priorityqueue/-/priorityqueue-1.0.0.tgz#0585b7a441ff2b11a71bb8cd23a0b6f6504fb30c"
+  integrity sha1-BYW3pEH/KxGnG7jNI6C29lBPsww=
+
 prompts@^2.0.1:
   version "2.4.2"
   resolved "https://registry.npmmirror.com/prompts/download/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
