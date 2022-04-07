@@ -2,7 +2,7 @@ import { Graph, Node } from "./graph";
 
 /**
  * 拓扑排序（依赖收集方法）
- * @param g 
+ * @param g
  * @returns 
  */
 export function topologicalSort(g: Graph): Node[] {

@@ -20,8 +20,10 @@ class SegmentTree {
   build(l: number, r: number, rt: number) {
     if (l === r) {
       this.sum[rt] = this.arr[l];
+      return;
     }
     let mid = (l + r) >> 1;
+    debugger;
     this.build(l, mid, rt << 1);
     this.build(mid + 1, r, (rt << 1) | 1);
     this.pushUp(rt);
@@ -111,3 +113,8 @@ class SegmentTree {
     return ans;
   }
 }
+
+const st = new SegmentTree([1,2,3,4,5,6]);
+st.build(1, 6, 1);
+console.log(st.sum);
+
